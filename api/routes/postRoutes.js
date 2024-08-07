@@ -12,7 +12,7 @@ import postValidation from "../middlewares/postValidation.js";
 const router = express.Router();
 
 router.get("/get", getPosts);
-router.get("/getById:id", getPostById);
+router.get("/getById/:id", getPostById);
 router.post(
   "/create",
   [
@@ -29,7 +29,7 @@ router.post(
   createPost
 );
 router.put(
-  "/update:id",
+  "/update/:id",
   [
     check("title").optional().notEmpty().withMessage("Title cannot be empty"),
     check("body").optional().notEmpty().withMessage("Body cannot be empty"),
@@ -45,6 +45,6 @@ router.put(
   postValidation,
   updatePost
 );
-router.delete("/delete:id", deletePost);
+router.delete("/delete/:id", deletePost);
 
 export default router;

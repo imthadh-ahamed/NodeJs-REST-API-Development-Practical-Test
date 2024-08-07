@@ -8,9 +8,9 @@ const getAllPosts = async (page, limit, filter) => {
     query.title = { $regex: filter.title, $options: "i" };
   }
 
-  // Filtering by category
-  if (filter.category) {
-    query.category = filter.category;
+  // Filtering by status
+  if (filter.status) {
+    query.status = filter.status;
   }
 
   // Finding posts with pagination and filtering

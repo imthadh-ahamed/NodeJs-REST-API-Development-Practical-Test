@@ -7,7 +7,7 @@ export const getPosts = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10; // Default to 10 posts per page
     const filter = {
       title: req.query.title || "",
-      category: req.query.category || "",
+      category: req.query.status || "",
     };
 
     // Fetch posts and total count using the service
@@ -67,8 +67,8 @@ export const deletePost = async (req, res) => {
     if (!result) {
       return res.status(404).json({ message: "Post not found" });
     }
-    res.status(204).send();
+    res.status(200).json({ message: "Post successfully deleted" });
   } catch (error) {
-    res.status(500).json({ error: error.message }); 
+    res.status(500).json({ error: error.message });
   }
 };
