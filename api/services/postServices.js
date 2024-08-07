@@ -1,7 +1,27 @@
 import Post from "../model/postmodel.js";
 
-const getAllPosts = async () => {
-  return await Post.find();
+const getAllPosts = async (page, limit, filter) => {
+  const query = {};
+
+  // Filtering by title
+  if (filter.title) {
+    query.title = { $regex: filter.title, $options: "i" };
+  }
+
+  // Filtering by category
+  if (filter.category) {
+    query.category = filter.category;
+  }
+
+  // Finding posts with pagination and filtering
+  const posts = await Post.find(query)
+    .skip((page - 1) * limit)
+    .limit(limit);   
+
+  // Counting the total number of documents matching the filter
+  const total = await Post.countDocuments(query);
+
+  return { posts, total }; // Return the posts and total count
 };
 
 const getPostById = async (id) => {

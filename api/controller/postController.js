@@ -1,14 +1,30 @@
 import postService from "../services/postServices.js";
 
+// Get all posts
 export const getPosts = async (req, res) => {
   try {
-    const posts = await postService.getAllPosts();
-    res.json(posts);
+    const page = parseInt(req.query.page) || 1; // Default to page 1
+    const limit = parseInt(req.query.limit) || 10; // Default to 10 posts per page
+    const filter = {
+      title: req.query.title || "",
+      category: req.query.category || "",
+    };
+
+    // Fetch posts and total count using the service
+    const { posts, total } = await postService.getAllPosts(page, limit, filter);
+
+    res.json({
+      posts,
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
+// Get post by ID function declaration
 export const getPostById = async (req, res) => {
   try {
     const post = await postService.getPostById(req.params.id);
@@ -21,6 +37,7 @@ export const getPostById = async (req, res) => {
   }
 };
 
+// Create post declaration
 export const createPost = async (req, res) => {
   try {
     const post = await postService.createPost(req.body);
@@ -30,6 +47,7 @@ export const createPost = async (req, res) => {
   }
 };
 
+// Update post declaration
 export const updatePost = async (req, res) => {
   try {
     const post = await postService.updatePost(req.params.id, req.body);
@@ -42,6 +60,7 @@ export const updatePost = async (req, res) => {
   }
 };
 
+// Delete post declaration
 export const deletePost = async (req, res) => {
   try {
     const result = await postService.deletePost(req.params.id);
@@ -50,6 +69,6 @@ export const deletePost = async (req, res) => {
     }
     res.status(204).send();
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message }); 
   }
 };
