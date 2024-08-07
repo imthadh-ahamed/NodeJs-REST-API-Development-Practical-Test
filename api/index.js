@@ -2,8 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-// import postRoutes from "./routes/postRoutes.js";
 import chalk from "chalk";
+import postRoutes from "./routes/postRoutes.js"
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 // Routes
-// app.use("/api/posts", postRoutes);
+app.use("/api/posts", postRoutes);
 
 
 
