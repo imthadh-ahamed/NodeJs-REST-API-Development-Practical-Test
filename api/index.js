@@ -9,6 +9,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const MONGO_URI = 'mongodb+srv://it22077288:IT22077288@cluster0.fuzmzrf.mongodb.net/bloodbank?retryWrites=true&w=majority';
 
 // Middleware
 app.use(bodyParser.json());
@@ -20,7 +21,7 @@ app.use("/api/posts", postRoutes);
 
 // Database connection
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
